@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<trips>
+  <trip>
+    <tripName>Test Trip 1</tripName>
+    <locations>
+      <location>
+        <locationName>First Location Name</locationName>
+        <address>1234 generic street</address>
+      </location>
+      <location>
+        <locationName>Second Location Name</locationName>
+        <address>4321 generic street</address>
+      </location>
+    </locations>
+    <distance>1738</distance>
+    <description>Description</description>
+  </trip>
+  <trip>
+    <tripName>Test Trip 2</tripName>
+    <locations>
+      <location>
+        <locationName>Test Trip 2 First Location Name</locationName>
+        <address>Test Trip 2 1234 generic street</address>
+      </location>
+      <location>
+        <locationName>Test Trip 2 Second Location Name</locationName>
+        <address>Test Trip 2 4321 generic street</address>
+      </location>
+    </locations>
+    <distance>Test Trip 2 1738</distance>
+    <description>Test Trip 2 Description</description>
+  </trip>
+  <trip>
+    <tripName>Test Trip 3</tripName>
+    <locations>
+      <location>
+        <locationName>Test Trip 3 First Location Name</locationName>
+        <address>Test Trip 3 1234 generic street</address>
+      </location>
+      <location>
+        <locationName>Second Location Name</locationName>
+        <address>Test Trip 3 4321 generic street</address>
+      </location>
+    </locations>
+    <distance>1738 Trip 3</distance>
+    <description>Test Trip 3 Description</description>
+  </trip>
+</trips>

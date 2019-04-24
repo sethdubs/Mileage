@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<locations>
+  <location>
+    <locationName>Test Location</locationName>
+    <address>130 ANDREA DR MARYVILLE, TN 37804</address>
+    <locationCode>Test</locationCode>
+  </location>
+  <location>
+    <locationName>Seth's apt</locationName>
+    <address>13 Addison Park Drive Huntsville, AL 35806</address>
+    <locationCode>123456</locationCode>
+  </location>
+</locations>

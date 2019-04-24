@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WindowsFormsApp3.Properties
+namespace Mileage.Properties
 {
 
 
@@ -44,7 +44,7 @@ namespace WindowsFormsApp3.Properties
          {
             if ((resourceMan == null))
             {
-               global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WindowsFormsApp3.Properties.Resources", typeof(Resources).Assembly);
+               global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Mileage.Properties.Resources", typeof(Resources).Assembly);
                resourceMan = temp;
             }
             return resourceMan;
