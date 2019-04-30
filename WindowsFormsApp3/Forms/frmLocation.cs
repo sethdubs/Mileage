@@ -40,7 +40,7 @@ namespace Mileage
          string address = textBoxAddress.Text;
          string locationCode = textBoxLocationCode.Text;
 
-         XmlWriter.writeLocationToFile(new Location(name, address, locationCode));
+         TripControl.WriteLocationToXml(new Location(name, address, locationCode), @"data\Location.xml");
          this.Close();
       }
    }

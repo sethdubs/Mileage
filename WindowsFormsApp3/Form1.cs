@@ -106,7 +106,6 @@ namespace Mileage
             {
                var view = listBoxSavedLocations.SelectedItem;
                DataRow row = ((DataRowView)view).Row;
-               //DataRow row = ((DataRowView)listBoxSavedLocations.SelectedItem).Row;
                string n = row.ItemArray[0].ToString();
                foreach (Location l in locations)
                {
@@ -122,7 +121,46 @@ namespace Mileage
 
       private void buttonSaveLocation_Click(object sender, EventArgs e)
       {
+         string name = textBoxName.Text;
+         string address = textBoxAddress.Text;
+         string locCode = textBoxLocationCode.Text;
+         TripControl.WriteLocationToXml(new Mileage.Location(name, address, locCode), @"data\Location.xml");
 
+         textBoxName.Clear();
+         textBoxAddress.Clear();
+         textBoxLocationCode.Clear();
+         updateLocationsBox();
+      }
+
+      private void updateLocationsBox()
+      {
+
+         dataSetLocations = new DataSet();
+         dataSetLocations.ReadXml(@"data\Location.xml");
+         dataSetLocations.ReadXmlSchema(@"data\LocationSchema.xml");
+         bindingSourceLocations = new BindingSource();
+         bindingSourceLocations.DataSource = dataSetLocations;
+         bindingSourceLocations.DataMember = "location";
+         getSavedLocation = true;
+         listBoxSavedLocations.DataSource = null;
+         listBoxSavedLocations.DataSource = bindingSourceLocations;
+         listBoxSavedLocations.DisplayMember = "locationName";
+
+         locations = TripControl.getLocations(@"data\Location.xml");
+      }
+
+      private void buttonRemoveLocation_Click(object sender, EventArgs e)
+      {
+         var view = listBoxSavedLocations.SelectedItem;
+         DataRow row = ((DataRowView)view).Row;
+         string n = row.ItemArray[0].ToString();
+         foreach (Location l in locations)
+         {
+            if (l.locationName == n)
+            {
+               TripControl.RemoveLocation(l, @"data\Location.xml");
+            }
+         }
       }
    }
 }

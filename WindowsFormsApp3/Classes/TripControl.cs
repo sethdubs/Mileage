@@ -80,6 +80,38 @@ namespace Mileage
          xml.Save(path);
       }
 
+      public static void RemoveLocation(Location l, string path)
+      {
+         XDocument xml;
+
+         xml = XDocument.Load(path);
+         foreach (XElement e in xml.Element("locations").Elements("location"))
+         {
+            if (e.Element("locationName").Value == l.locationName)
+            {
+               e.Remove();
+            }
+         }
+
+         xml.Save(path);
+      }
+      public static void UpdateLocation(Location l, string path)
+      {
+         XDocument xml;
+
+         xml = XDocument.Load(path);
+         foreach (XElement e in xml.Element("locations").Elements("location"))
+         {
+            if (e.Element("locationName").Value == l.locationName)
+            {
+               e.Element("address").Value = l.address;
+               e.Element("locationCode").Value = l.locationCode;
+            }
+         }
+
+         xml.Save(path);
+      }
+
 
 
    }

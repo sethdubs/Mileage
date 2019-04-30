@@ -187,6 +187,7 @@
          this.buttonRemoveLocation.TabIndex = 18;
          this.buttonRemoveLocation.Text = "Remove Location";
          this.buttonRemoveLocation.UseVisualStyleBackColor = true;
+         this.buttonRemoveLocation.Click += new System.EventHandler(this.buttonRemoveLocation_Click);
          // 
          // listBoxSavedLocations
          // 

@@ -14,14 +14,20 @@ namespace Mileage
    public partial class frmTrip : Form
    {
       string curdir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+      ComboBox[] boxes = new ComboBox[6];
       public frmTrip()
       {
          InitializeComponent();
 
-         updateComboBox();
+         boxes[0] = comboBox1;
+         boxes[1] = comboBox2;
+         boxes[2] = comboBox3;
+         boxes[3] = comboBox4;
+         boxes[4] = comboBox5;
+         boxes[5] = comboBox6;
 
-         comboBox1.DataSource = bindingSourceLocations;
-         comboBox1.DisplayMember = "locationName";
+
+         updateComboBox();
 
       }
 
@@ -35,42 +41,137 @@ namespace Mileage
 
       private void button1_Click(object sender, EventArgs e)
       {
-         this.Close();
+         var nameForm = new Forms.frmName();
+
+
+         DialogResult res = nameForm.ShowDialog();
+         if (res == DialogResult.OK)
+         {
+
+            string tname = nameForm.TripName;
+            string tdesc = nameForm.Description;
+            List<string> lnames = new List<string>();
+            List<Location> locations = new List<Location>();
+
+            foreach (ComboBox b in boxes)
+            {
+               if (b.Enabled && (b.Text != String.Empty || b.Text != null))
+               {
+                  lnames.Add(b.Text);
+               }
+            }
+            List<Location> lSaved = TripControl.getLocations(@"data\Location.xml");
+            foreach (Location sav in lSaved)
+            {
+               if (lnames.Contains(sav.locationName))
+               {
+                  locations.Add(sav);
+               }
+            }
+            this.Close();
+         }
+
       }
 
       private void updateComboBox()
       {
-         dataSetLocations = new DataSet();
-         dataSetLocations.ReadXml(String.Format(@"{0}\Data\Location.xml", curdir));
-         dataSetLocations.ReadXmlSchema(String.Format(@"{0}\Data\LocationSchema.xml", curdir));
+         List<Location> locations = TripControl.getLocations(@"data\Location.xml");
+         List<object> names = new List<object>();
 
-         bindingSourceLocations = new BindingSource();
-         bindingSourceLocations.DataSource = dataSetLocations;
-         bindingSourceLocations.DataMember = "location";
+         foreach (Location l in locations)
+         {
+            names.Add(l.locationName);
+         }
 
-         int index = comboBox1.SelectedIndex;
+         foreach (ComboBox b in boxes)
+         {
+            int ind = b.SelectedIndex;
+            b.Items.Clear();
+            b.Items.AddRange(names.ToArray());
+            if (ind >= 0)
+            {
+               b.SelectedIndex = ind;
+               b.Text = b.Items[ind].ToString();
+            }
+         }
 
-         comboBox1.DataSource = null;
-         comboBox1.DataSource = bindingSourceLocations;
-         comboBox1.DisplayMember = "locationName";
-         comboBox1.SelectedIndex = index;
       }
 
       private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
       {
-         if (comboBox1.SelectedIndex >= 0)
+
+
+         ComboBox box = (ComboBox)sender;
+         if (box.SelectedIndex >= 0)
          {
-            DataRowView row = (DataRowView)comboBox1.Items[comboBox1.SelectedIndex];
-            string selected = row.Row.ItemArray[0].ToString();
-            List<Location> locations = XmlReader.readLocationData();
+            string name = (string)box.Items[box.SelectedIndex];
+            List<Location> locations = TripControl.getLocations(@"data\Location.xml");
             foreach (Location l in locations)
             {
-               if (l.locationName == selected)
+               if (l.locationName == name)
                {
-                  labelAddress.Text = l.address;
+                  getAssociatedLabel(box).Text = l.address;
                }
             }
          }
+      }
+
+
+      private Label getAssociatedLabel(ComboBox box)
+      {
+         switch (box.Name)
+         {
+            case "comboBox1":
+               return labelAddress1;
+            case "comboBox2":
+               return labelAddress2;
+            case "comboBox3":
+               return labelAddress3;
+            case "comboBox4":
+               return labelAddress4;
+            case "comboBox5":
+               return labelAddress5;
+            case "comboBox6":
+               return labelAddress6;
+         }
+         return null;
+      }
+
+      private ComboBox getAssociatedCombo(CheckBox c)
+      {
+         switch (c.Name)
+         {
+            case "checkBox1":
+               return comboBox1;
+            case "checkBox2":
+               return comboBox2;
+            case "checkBox3":
+               return comboBox3;
+            case "checkBox4":
+               return comboBox4;
+            case "checkBox5":
+               return comboBox5;
+            case "checkBox6":
+               return comboBox6;
+         }
+         return null;
+      }
+
+      private void frmTrip_Load(object sender, EventArgs e)
+      {
+
+      }
+
+      private void checkBox_CheckedChanged(object sender, EventArgs e)
+      {
+         CheckBox c = (CheckBox)sender;
+         ComboBox b = getAssociatedCombo(c);
+         Label label = getAssociatedLabel(b);
+
+         bool state = c.Checked;
+
+         b.Enabled = state;
+         label.Enabled = state;
       }
    }
 }
